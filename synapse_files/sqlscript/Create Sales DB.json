@@ -1,0 +1,17 @@
+{
+	"name": "Create Sales DB",
+	"properties": {
+		"content": {
+			"query": "IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'Sales')\nBEGIN\n    DROP DATABASE Sales\nEND  \n\nCREATE DATABASE Sales\n    COLLATE Latin1_General_100_BIN2_UTF8\nGO\n\nUSE Sales\nGO\n\nCREATE EXTERNAL DATA SOURCE sales_data WITH (\n    LOCATION = 'https://datalakejrmb1fu.dfs.core.windows.net/files/'\n)\n\nGO\n\nCREATE EXTERNAL FILE FORMAT Parquet\nWITH (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\nGO\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Sales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
